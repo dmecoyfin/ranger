@@ -958,6 +958,7 @@ void Forest::setAlwaysSplitVariables(const std::vector<std::string>& always_spli
 }
 
 void Forest::showProgress(std::string operation, size_t max_progress) {
+  Rcpp::Function flush_console("flush.console");
   using std::chrono::steady_clock;
   using std::chrono::duration_cast;
   using std::chrono::seconds;
@@ -988,6 +989,7 @@ void Forest::showProgress(std::string operation, size_t max_progress) {
       if (verbose_out) {
         *verbose_out << operation << " Progress: " << round(100 * relative_progress) << "%. Estimated remaining time: "
             << beautifyTime(remaining_time) << "." << std::endl;
+      flush_console();
       }
       last_time = steady_clock::now();
     }
